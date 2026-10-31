@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEME-Shoter — Perspectiva</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    background: #0b0c10;
+    color: #eaeaea;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+  header {
+    display: flex; align-items: center; gap: 14px; padding: 20px 0;
+    border-bottom: 1px solid #2a2a35;
+  }
+  .logo { width: 40px; height: 40px; border: 3px solid #ffd166; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 16px; color: #ffd166; background: #141420; }
+  h1 { font-size: 22px; letter-spacing: -0.5px; color: #fff; }
+  .subtitle { color: #9aa0b1; font-size: 13px; margin-top: 2px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #00e67a; border: 1px solid #00e67a; border-radius: 999px; padding: 2px 10px; margin-left: 10px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 24px; }
+  .card { background: #141420; border: 1px solid #2a2a35; border-radius: 12px; padding: 18px; }
+  .card h2 { font-size: 15px; margin-bottom: 10px; color: #ffd166; display: flex; align-items: center; gap: 8px; }
+  .card p { color: #c3c7d4; font-size: 13.5px; }
+  .card b { color: #fff; }
+  .stat { font-size: 20px; font-weight: 800; color: #00e67a; margin: 6px 0 2px; }
+  .stat small { font-size: 12px; color: #8a91a3; font-weight: 500; }
+  ul { color: #c3c7d4; font-size: 13px; padding-left: 18px; margin-top: 6px; }
+  ul li { margin: 4px 0; }
+  .highlight { color: #ff6b6b; }
+  .muted { color: #8a91a3; font-size: 12px; margin-top: 26px; border-top: 1px solid #2a2a35; padding-top: 16px; }
+  @media (max-width: 600px) {
+    .wrap { padding: 14px; }
+    header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .tag { margin-left: 0; margin-top: 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo">M</div>
+    <div>
+      <h1>MEME-Shoter <span class="tag">Perspectiva</span></h1>
+      <div class="subtitle">Puro 3D para Battle Royale — 60 FPS estables en móvil, sin sobrecalentar el procesador ni lag.</div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h2>❤️ Salud base del jugador</h2>
+      <div class="stat">1000 HP</div>
+      <p>Estándar fijo para equilibrar todo el daño del juego. Cada arma está ajustada a este valor.</p>
+    </div>
+    <div class="card">
+      <h2>👥 Partida</h2>
+      <div class="stat">30 jugadores</div>
+      <p>Reales por partida, rellenados con bots inteligentes para mantener la acción fluida y constante.</p>
+    </div>
+    <div class="card">
+      <h2>🕊️ Las Palomas Cósmicas</h2>
+      <p>Anti-camper universal: subir a zonas de altura no autorizadas o romper los límites del mapa hace descender palomas gigantes que eliminan al instante.</p>
+    </div>
+    <div class="card">
+      <h2>☄️ Meteorito de la Humillación</h2>
+      <p>Mini meteorito aleatorio: solo <b>−5 HP</b> al impactado y anuncio global: <i>"A [jugador] le cayó un meteorito, qué pena, terrible..."</i></p>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>🐓 Apocalipsis Avícola</h2>
+      <p>Masacrar 10 pollos desata pollos inmortales con teletransportación cuántica fuera del FOV: <b>−2 HP</b> por picotazo. Chat: <i>"A [jugador] lo funaron los pollos por hate"</i>.</p>
+    </div>
+    <div class="card">
+      <h2>🐱 El Pana Miguel</h2>
+      <p>Gatito de 1.02 m y 12 kg, pelaje pixel-art en 3D, traje táctico sin guantes, cola animada. Con guantes → <b>Furia Gatuna</b> (ataque rápido cuerpo a cuerpo).</p>
+    </div>
+    <div class="card">
+      <h2>🗺️ Mapas</h2>
+      <ul>
+        <li><b>La Zona de la Erupción</b> (volcánico): ciudad, pueblo rural, cordillera y volcán.</li>
+        <li><b>El Posapocalipsis</b>: misma zona en ruinas, tormenta de ceniza, búnker oculto.</li>
+        <li><b>Neón Ciber-Barrio</b> (cyberpunk): leus podridos, humo tóxico, máscaras de gas.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="grid-column: 1 / -1;">
+    <h2>🔫 Arsenal (balanceado a 1000 HP)</h2>
+    <ul>
+      <li><b>Míticas:</b> Furia de Garras, Bate Bonk (78 / especial 128), Cañón de Memes Añejos (80 / láser 100 + 50/s), Chancla Divina (80 / especial 300), Lanza-Chismes (especial 280 área).</li>
+      <li><b>Pistolas:</b> Pio-Pio Glock (15–20), M1911/Beretta/Glock 17 (35), Deagle/.44 Magnum (85).</li>
+      <li><b>SMG:</b> Uzi/MP5/TEC-9/P90/Vector/MP7 (25–30).</li>
+      <li><b>Escopetas:</b> 870/Doble/Benelli/SPAS-12 (120–150), AA-12 (75 auto).</li>
+      <li><b>Rifles:</b> AK-47/M4A1/SCAR-H y más (45–55).</li>
+      <li><b>Francotiradores:</b> AWM/Barrett/Mosin/SVD/VSS — cabeza 300–400, cuerpo 200.</li>
+      <li><b>Pesados:</b> RPG-7/Javelin/M79 (350 área); Minigun/M249/M60/PKM (40/bala, menos movilidad).</li>
+      <li><b>Melé:</b> bate, palanca, cuchillo, katana, mazo (40–90).</li>
+    </ul>
+  </div>
+
+  <div class="muted">
+    Estado del servidor: en ejecución en el puerto <span class="stat" style="font-size:13px;">3000</span>. Captura de escritorio y móvil generada por <b>capture.sh</b>.
+  </div>
+</div>
+</body>
+</html>

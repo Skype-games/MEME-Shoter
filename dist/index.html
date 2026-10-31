@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#0d0a12" />
+  <meta name="description" content="MEME-SHOTER: Battle Royale 3D de memes. 30 jugadores, 1000 HP, pollos justicieros, meteoritos y el Pana Miguel." />
+  <title>MEME-SHOTER · Battle Royale</title>
+  <script type="module" crossorigin src="./assets/index-ByOh48HA.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BshtsMVx.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="game-canvas"></canvas>
+
+    <!-- ══════════ MENÚ ══════════ -->
+    <section id="menu" class="screen menu-screen">
+      <div class="menu-scanlines"></div>
+      <div class="menu-glow"></div>
+
+      <header class="brand">
+        <div class="brand-kicker">🌮 EL BATTLE ROYALE MÁS MEXICANO DEL MULTIVERSO 🌮</div>
+        <h1 class="logo">MEME<span>·</span>SHOTER</h1>
+        <div class="logo-sub"><b>BATTLE ROYALE</b> · 30 JUGADORES · 1000 HP · 3 MAPAS</div>
+      </header>
+
+      <div class="menu-grid">
+        <section class="panel maps-panel">
+          <div class="panel-head">
+            <h2>ELIGE TU ZONA DE CAOS</h2>
+            <span class="panel-tag">3 ESCENARIOS</span>
+          </div>
+          <div id="map-list" class="map-list"></div>
+          <div class="mythic-head">
+            <span>ARSENAL MÍTICO</span>
+            <small>5 armas con especial (Q) · botín dorado</small>
+          </div>
+          <div class="mythic-grid">
+            <div class="mythic-card"><span>🐾</span><b>Furia de Garras</b><small>Melé felino</small></div>
+            <div class="mythic-card"><span>🏏</span><b>Bate Bonk</b><small>Empuje brutal</small></div>
+            <div class="mythic-card"><span>🗿</span><b>Cañón de Memes</b><small>Área añeja</small></div>
+            <div class="mythic-card"><span>🩴</span><b>Chancla Divina</b><small>Búmeran latino</small></div>
+            <div class="mythic-card"><span>👵</span><b>Lanza-Chismes</b><small>Rayo de hate</small></div>
+          </div>
+        </section>
+
+        <aside class="panel skin-panel">
+          <div class="panel-head">
+            <h2>EL PANA MIGUEL</h2>
+            <span class="panel-tag">SKIN</span>
+          </div>
+          <div class="skin-stage">
+            <canvas id="skin-preview"></canvas>
+            <div class="skin-glow"></div>
+            <div class="skin-badge" id="skin-badge">SIN GUANTES</div>
+          </div>
+          <div class="skin-toggle" id="skin-toggle">
+            <button class="active" data-skin="miguel">😺 Pana normal</button>
+            <button data-skin="furia">🥊 Furia Gatuna</button>
+          </div>
+          <p class="skin-desc" id="skin-desc"></p>
+          <div class="skin-stats">
+            <div><b>1.02 m</b><span>altura</span></div>
+            <div><b>12 kg</b><span>peso</span></div>
+            <div><b id="skin-bonus">+0%</b><span>melé</span></div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="menu-bottom">
+        <div class="feature-strip">
+          <span>🐦 Palomas anti-camper</span>
+          <span>☄️ Meteorito de la humillación</span>
+          <span>🐔 Apocalipsis avícola</span>
+          <span>🩴 Chancla búmeran</span>
+        </div>
+        <div class="menu-actions">
+          <button id="quality-btn" class="ghost-btn" title="Calidad gráfica">⚙️ <span id="quality-label">AUTO</span></button>
+          <button id="play-btn" class="play-btn">
+            <span class="play-icon">▶</span>
+            <span class="play-text">JUGAR AHORA<small>30 jugadores · bots inteligentes</small></span>
+          </button>
+          <button id="how-btn" class="ghost-btn" title="Cómo jugar">❔</button>
+        </div>
+        <div class="perf-badge">⚡ Optimizado para 60 FPS en móvil · sin sobrecalentamiento</div>
+      </div>
+
+      <div id="how-modal" class="modal hidden">
+        <div class="modal-card">
+          <h3>CÓMO SOBREVIVIR</h3>
+          <div class="how-grid">
+            <div><b>🖥️ PC</b><p>WASD mover · Mouse mirar · Clic disparar · Shift correr · Espacio saltar · R recargar · 1-3 armas · E recoger · Q especial · Esc pausa</p></div>
+            <div><b>📱 MÓVIL</b><p>Joystick izquierdo · Arrastra a la derecha para mirar · Botón rojo dispara · Salto, recarga, cambio de arma y especial alrededor.</p></div>
+            <div><b>⚖️ REGLAS</b><p>1000 HP. El último en pie gana. No campees en alturas ni salgas del mapa: las Palomas Cósmicas te eliminan. No masacres 10 pollos: la justicia avícola es real.</p></div>
+            <div><b>🎯 MÍTICAS</b><p>Las 5 armas míticas tienen especial (Q). El resto pega duro pero sin drama. Recoge botín dorado y busca las máscaras de gas en Neón.</p></div>
+          </div>
+          <button id="how-close" class="play-btn small">ENTENDIDO</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ CARGA ══════════ -->
+    <section id="loading" class="screen loading-screen hidden">
+      <div class="load-cat">😼</div>
+      <h2 id="load-title">GENERANDO EL CAOS</h2>
+      <div class="load-bar"><i id="load-fill"></i></div>
+      <p id="load-sub">Colocando pollos jueces...</p>
+    </section>
+
+    <!-- ══════════ HUD ══════════ -->
+    <section id="hud" class="hud hidden">
+      <div class="hud-top">
+        <div class="hud-left">
+          <div class="alive-pill"><span class="alive-dot"></span><b id="alive-count">30</b><small>VIVOS</small></div>
+          <div class="zone-pill" id="zone-pill"><span id="zone-icon">🌋</span><b id="zone-label">LAVA</b><small id="zone-timer">2:00</small></div>
+        </div>
+        <div class="match-info">
+          <span id="map-name">LA ZONA DE LA ERUPCIÓN</span>
+          <b id="match-timer">00:00</b>
+        </div>
+        <div class="hud-right">
+          <canvas id="minimap" width="168" height="168"></canvas>
+          <button id="pause-btn" class="icon-btn" title="Pausa">⏸</button>
+        </div>
+      </div>
+
+      <div class="feed" id="feed"></div>
+      <div class="killfeed" id="killfeed"></div>
+      <div class="event-banner hidden" id="event-banner">
+        <b id="event-title">EVENTO</b>
+        <span id="event-sub"></span>
+      </div>
+      <div class="drop-info hidden" id="drop-info">
+        <b id="altitude">92 m</b>
+        <span>altura de salto · WASD para planear</span>
+      </div>
+
+      <div class="crosshair" id="crosshair">
+        <i class="ch-dot"></i><i class="ch-l"></i><i class="ch-r"></i><i class="ch-t"></i><i class="ch-b"></i>
+        <div class="hitmarker" id="hitmarker">✕</div>
+      </div>
+
+      <div class="hud-bottom">
+        <div class="health-panel">
+          <div class="health-head">
+            <span class="avatar">😺</span>
+            <div><b id="player-name">MIGUEL</b><small id="skin-tag">EL PANA DE SIEMPRE</small></div>
+            <div class="hp-num"><b id="hp-value">1000</b><span>/1000 HP</span></div>
+          </div>
+          <div class="hp-track"><i id="hp-fill"></i><em id="hp-lag"></em></div>
+          <div class="status-row">
+            <span id="status-gloves" class="status-chip">🐾 GARRAS</span>
+            <span id="status-guard" class="status-chip hidden">🛡️ PROTEGIDO</span>
+            <span id="status-zone" class="status-chip danger hidden">☣️ FUERA DE ZONA</span>
+            <span id="status-mask" class="status-chip hidden">😷 MÁSCARA 60s</span>
+            <span id="status-chickens" class="status-chip danger hidden">🐔 FUNADO</span>
+          </div>
+        </div>
+
+        <div class="weapon-panel">
+          <div class="weapon-slots" id="weapon-slots"></div>
+          <div class="weapon-main">
+            <div class="weapon-icon" id="weapon-icon">🐤</div>
+            <div class="weapon-meta">
+              <b id="weapon-name">Pio-Pío Glock</b>
+              <small id="weapon-cat">PISTOLA · COMÚN</small>
+              <div class="ammo"><b id="ammo-mag">15</b><span>/ <i id="ammo-reserve">90</i></span></div>
+            </div>
+            <button class="reload-btn" id="reload-btn">⟳<small>R</small></button>
+          </div>
+          <div class="special-row">
+            <button class="special-btn" id="special-btn">
+              <span id="special-icon">✨</span>
+              <span class="special-txt"><b id="special-name">SIN ESPECIAL</b><small id="special-desc">Busca un arma mítica</small></span>
+              <i class="cd" id="special-cd"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="interact-prompt hidden" id="interact-prompt"><kbd>E</kbd> <span id="interact-text">Recoger</span></div>
+      <div class="toast" id="toast"></div>
+      <div class="vignette" id="vignette"></div>
+      <div class="float-layer" id="float-layer"></div>
+
+      <!-- Controles táctiles -->
+      <div class="touch-ui hidden" id="touch-ui">
+        <div class="joystick" id="joystick"><div class="stick" id="stick"></div></div>
+        <div class="look-zone" id="look-zone"></div>
+        <div class="touch-actions">
+          <button class="tbtn fire" id="btn-fire">🔥</button>
+          <button class="tbtn jump" id="btn-jump">⤒</button>
+          <button class="tbtn reload" id="btn-reload">⟳</button>
+          <button class="tbtn swap" id="btn-swap">🔁</button>
+          <button class="tbtn special" id="btn-special">✨</button>
+          <button class="tbtn aim" id="btn-aim">🎯</button>
+          <button class="tbtn pickup" id="btn-pickup">✋</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════ PAUSA ══════════ -->
+    <div id="pause" class="modal hidden">
+      <div class="modal-card pause-card">
+        <h3>PAUSA</h3>
+        <p>El caos puede esperar.</p>
+        <button id="resume-btn" class="play-btn small">SEGUIR JUGANDO</button>
+        <button id="quit-btn" class="ghost-btn wide">ABANDONAR PARTIDA</button>
+        <div class="pause-tip">💡 Tip: los pollos no perdonan. No mates 10.</div>
+      </div>
+    </div>
+
+    <!-- ══════════ FIN ══════════ -->
+    <section id="end-screen" class="screen end-screen hidden">
+      <div class="end-card">
+        <div class="end-kicker" id="end-kicker">PARTIDA TERMINADA</div>
+        <h2 id="end-title">ELIMINADO</h2>
+        <p id="end-sub">Los memes te recordarán.</p>
+        <div class="end-place"><b id="end-place">#12</b><span>PUESTO</span></div>
+        <div class="end-stats">
+          <div><b id="stat-kills">0</b><span>KILLS</span></div>
+          <div><b id="stat-damage">0</b><span>DAÑO</span></div>
+          <div><b id="stat-chickens">0</b><span>POLLOS</span></div>
+          <div><b id="stat-time">00:00</b><span>TIEMPO</span></div>
+        </div>
+        <div class="end-reason" id="end-reason">Te eliminó Cheems con AK-47</div>
+        <div class="end-actions">
+          <button id="again-btn" class="play-btn small">JUGAR OTRA VEZ</button>
+          <button id="menu-btn" class="ghost-btn wide">VOLVER AL MENÚ</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

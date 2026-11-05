@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#120d1d" />
+  <title>MEME SHOTER — Battle Royale</title>
+  <meta name="description" content="MEME SHOTER: battle royale 3D de 30 jugadores con Pana Miguel, Doña Tulia, chanclas cuánticas y un apocalipsis avícola." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='54'%3E%F0%9F%90%B1%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <canvas id="scene" aria-label="Mundo 3D de MEME SHOTER"></canvas>
+
+  <!-- ===================== MAIN MENU ===================== -->
+  <section id="menu">
+    <div class="menu-noise"></div>
+    <header class="menu-top">
+      <div class="brand">
+        <div class="logo">MEME<span>SHOTER</span></div>
+        <div class="tagline">BATTLE ROYALE · 30 JUGADORES · 1 GANADOR</div>
+      </div>
+      <div class="top-meta">
+        <div class="profile-chip">
+          <div class="avatar">🐱</div>
+          <div>
+            <b id="profile-name">PanaMiguel_777</b>
+            <span id="profile-level">NIVEL 1</span>
+          </div>
+          <div class="xp-mini"><i id="profile-xp"></i></div>
+        </div>
+        <div class="stat-chip"><small>VICTORIAS</small><b id="profile-wins">0</b></div>
+        <div class="stat-chip"><small>ELIMINACIONES</small><b id="profile-kills">0</b></div>
+        <button id="mute-button" class="icon-button" aria-label="Toggle Sound">🔊</button>
+      </div>
+    </header>
+
+    <div class="menu-main">
+      <aside class="panel left-panel">
+        <div class="panel-heading"><span>01</span><h2>ELIGE EL MAPA</h2></div>
+        <div id="map-list" class="map-list"></div>
+        <div class="map-detail" id="map-detail">
+          <div class="map-art" id="map-art">🌋</div>
+          <div>
+            <b id="map-detail-name">La Zona de la Erupción</b>
+            <p id="map-detail-desc">Ciudad, pueblo rural, cordillera y un volcán que entra en erupción a los 2 minutos.</p>
+            <span id="map-detail-hazard">⚠️ Ríos de lava y rocas ardientes</span>
+          </div>
+        </div>
+        <div class="season-card">
+          <div class="season-top"><span>TEMPORADA 1</span><b>CAOS MEMERO</b></div>
+          <div class="season-bar"><i style="width:63%"></i></div>
+          <p>🎁 Recompensa: skin <b>Pana Miguel Ciberpunk</b> al ganar con 25+ kills y nivel 15.</p>
+        </div>
+      </aside>
+
+      <div class="center-stage">
+        <div class="stage-top">
+          <div class="live-dot"></div> <span id="ready-label">EL PANA ESTÁ LISTO</span>
+        </div>
+        <div class="stage-name">
+          <span id="selected-icon">🐱</span>
+          <div>
+            <h1 id="selected-name">Pana Miguel</h1>
+            <p id="selected-tag">El pana de siempre</p>
+          </div>
+        </div>
+        <div class="stage-flavor">
+          <span>1.02 m</span><span>12 kg</span><span>100% PANA</span>
+        </div>
+      </div>
+
+      <aside class="panel right-panel">
+        <div class="panel-heading"><span>02</span><h2>PERSONAJES</h2></div>
+        <div id="char-list" class="char-grid"></div>
+        <div class="ability-card">
+          <div class="ability-head"><span>PASIVA</span><b id="passive-name">Piel gruesa</b></div>
+          <p id="passive-text">Recibe 20% menos daño de explosiones.</p>
+          <div class="ability-head special"><span>ESPECIAL · Q</span><b id="special-name-menu">Furia Gatuna</b></div>
+          <p id="special-text">Zarpazo circular que empuja y daña a todo lo que esté cerca.</p>
+        </div>
+        <div class="roster-count"><b>8</b> PERSONAJES · <b>10</b> ARMAS MÍTICAS</div>
+      </aside>
+    </div>
+
+    <footer class="menu-bottom">
+      <div class="controls-strip">
+        <div><kbd>WASD</kbd> Moverse</div>
+        <div><kbd>CLIC</kbd> Disparar</div>
+        <div><kbd>R</kbd> Recargar</div>
+        <div><kbd>E</kbd> Loot</div>
+        <div><kbd>Q</kbd> Especial</div>
+        <div><kbd>1·2·3</kbd> Armas</div>
+      </div>
+      <button id="play-button" class="play-button" aria-label="Start Game">
+        <span class="play-glint"></span>
+        <b>JUGAR</b>
+        <small>SOLO · 30 JUGADORES</small>
+      </button>
+      <div class="mythic-strip">
+        <span title="Bate Bonk">🏏</span>
+        <span title="Cañón de Memes">🗿</span>
+        <span title="Chancla Divina">🩴</span>
+        <span title="Lanza-Chismes">👵‍🔥</span>
+        <span title="Furia de Garras">🐾</span>
+      </div>
+    </footer>
+  </section>
+
+  <!-- ===================== HUD ===================== -->
+  <section id="hud" class="hidden">
+    <div id="damage-flash" class="damage-flash"></div>
+    <div id="scope-overlay" class="scope-overlay"><div class="scope-ring"></div><div class="scope-line h"></div><div class="scope-line v"></div></div>
+
+    <div class="hud-top-left">
+      <div id="char-badge" class="char-badge">🐱 Pana Miguel</div>
+      <div id="zone-warning" class="zone-warning">⚠️ FUERA DE LA ZONA SEGURA</div>
+    </div>
+
+    <div class="hud-top-center">
+      <div class="match-bar">
+        <div class="match-stat"><small>VIVOS</small><b id="alive-count">30</b></div>
+        <div class="match-divider"></div>
+        <div class="match-stat"><small>KILLS</small><b id="kill-count">00</b></div>
+        <div class="match-divider"></div>
+        <div class="match-stat"><small>TIEMPO</small><b id="match-timer">0:00</b></div>
+      </div>
+      <div id="compass" class="compass">🧭 N · 000°</div>
+      <div class="zone-bar">
+        <span id="zone-label">CÍRCULO 1</span>
+        <i></i>
+        <b id="zone-timer">CIERRA EN 36s</b>
+      </div>
+    </div>
+
+    <div class="hud-top-right">
+      <div class="minimap-wrap">
+        <canvas id="minimap" width="180" height="180"></canvas>
+        <div class="minimap-label">ZONA DE GUERRA</div>
+      </div>
+      <div id="killfeed" class="killfeed"></div>
+    </div>
+
+    <div id="event-banner" class="event-banner"></div>
+    <div id="event-sub" class="event-sub"></div>
+
+    <div id="chat-log" class="chat-log"></div>
+
+    <div class="hud-bottom-left">
+      <div class="vitals">
+        <div class="vital-row hp">
+          <span class="vital-icon">❤️</span>
+          <div class="vital-track"><i id="health-fill"></i><em></em></div>
+          <b id="health-text">1000</b>
+        </div>
+        <div class="vital-row armor">
+          <span class="vital-icon">🛡️</span>
+          <div class="vital-track"><i id="armor-fill"></i></div>
+          <b id="armor-text">250</b>
+        </div>
+      </div>
+      <div class="special-card">
+        <div class="special-key">Q</div>
+        <div class="special-info">
+          <b id="special-name">Furia Gatuna</b>
+          <div class="special-track"><i id="special-fill"></i></div>
+        </div>
+        <span id="special-state">Q · LISTO</span>
+      </div>
+    </div>
+
+    <div id="crosshair" class="crosshair">
+      <i></i><i></i><i></i><i></i><span></span>
+    </div>
+    <div id="hitmarker" class="hitmarker"><i></i><i></i><i></i><i></i></div>
+
+    <div class="hud-bottom-center">
+      <div class="weapon-panel">
+        <div class="weapon-icon" id="weapon-icon">🔫</div>
+        <div class="weapon-meta">
+          <span id="weapon-type">Pistola · COMÚN</span>
+          <b id="weapon-name">Pio-Pio Glock</b>
+          <div class="ammo-track"><i id="ammo-bar"></i></div>
+        </div>
+        <div class="ammo-count">
+          <b id="ammo-mag">15</b><span>/</span><small id="ammo-reserve">90</small>
+        </div>
+      </div>
+      <div id="interact-prompt" class="interact-prompt hidden"><kbd>E</kbd><div></div></div>
+    </div>
+
+    <div class="hud-bottom-right">
+      <div class="weapon-slots">
+        <div id="slot-0" class="weapon-slot active"><small>1</small><span>🔫</span><b>Pio-Pio Glock</b></div>
+        <div id="slot-1" class="weapon-slot"><small>2</small><span>🩴</span><b>Chancla Divina</b></div>
+        <div id="slot-2" class="weapon-slot empty"><small>3</small><span>·</span><b>Vacío</b></div>
+      </div>
+      <div class="hints"><kbd>R</kbd> recargar <kbd>E</kbd> loot <kbd>F</kbd> inspeccionar <kbd>ESC</kbd> cursor</div>
+    </div>
+
+    <div id="lock-hint" class="lock-hint">🖱️ Haz clic en la escena para apuntar</div>
+    <div id="toast-layer" class="toast-layer"></div>
+    <div id="float-layer" class="float-layer"></div>
+  </section>
+
+  <!-- ===================== END SCREEN ===================== -->
+  <section id="end-screen" class="hidden">
+    <div class="end-card">
+      <div id="end-icon" class="end-icon">🏆</div>
+      <h2 id="end-title" class="win">¡VICTORIA!</h2>
+      <div id="end-placement" class="placement">#1 DE 30</div>
+      <p id="end-killer" class="end-killer">La victoria es tuya, pana.</p>
+      <div class="end-stats">
+        <div><small>ELIMINACIONES</small><b id="end-kills">0</b></div>
+        <div><small>DAÑO TOTAL</small><b id="end-damage">0</b></div>
+        <div><small>TIEMPO</small><b id="end-time">0:00</b></div>
+      </div>
+      <div id="end-xp" class="end-xp">+0 XP</div>
+      <div class="end-actions">
+        <button id="replay-button" class="play-button small">JUGAR OTRA VEZ</button>
+        <button id="menu-button" class="ghost-button">MENÚ PRINCIPAL</button>
+      </div>
+      <p class="end-tip">Consejo: si te quedas quieto 30 segundos, las Palomas Cósmicas te funan.</p>
+    </div>
+  </section>
+
+  <!-- ===================== MOBILE ===================== -->
+  <div id="mobile-controls" class="mobile-controls hidden">
+    <div id="joystick" class="joystick"><div id="stick" class="stick"></div></div>
+    <div class="mobile-actions">
+      <button id="btn-loot" class="touch-btn small" aria-label="Loot">E</button>
+      <button id="btn-swap" class="touch-btn small" aria-label="Swap weapon">🔄</button>
+      <button id="btn-special" class="touch-btn special" aria-label="Special">⚡</button>
+      <button id="btn-aim" class="touch-btn small" aria-label="Aim">🎯</button>
+      <button id="btn-reload" class="touch-btn" aria-label="Reload">R</button>
+      <button id="btn-jump" class="touch-btn" aria-label="Jump">⤒</button>
+      <button id="btn-fire" class="touch-btn fire" aria-label="Fire">●</button>
+    </div>
+  </div>
+
+  <noscript><div class="nojs">Necesitas JavaScript para jugar MEME SHOTER.</div></noscript>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
